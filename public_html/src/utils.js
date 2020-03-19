@@ -38,6 +38,28 @@ def.utils.isBoolean = function(value) {
     return typeof value === 'boolean';
 };
 /**
+ * Checks whether a value is a float
+ * @access public
+ * @memberOf def.utils
+ * @method isFloat
+ * @param {*} value - Value to be type checked
+ * @returns {Boolean} Whether the value is a number
+ * @static
+ * @example
+ * def.utils.isFloat(5);              // Returns false
+ * def.utils.isFloat(5.2);            // Returns true
+ * def.utils.isFloat(-1);             // Returns false
+ * def.utils.isFloat(-3.7);           // Returns true
+ * def.utils.isFloat(0);              // Returns false
+ * def.utils.isFloat('Hello!');       // Returns false
+ * def.utils.isFloat([1, 2, 3]);      // Returns false
+ * def.utils.isFloat({a: 1, b: 2});   // Returns false
+ * def.utils.isFloat(NaN);            // Returns false
+ */
+def.utils.isFloat = function(value) {
+    return def.utils.isNumber(value) && !def.utils.isInteger(value);
+};
+/**
  * Checks whether a value is a function
  * @access public
  * @memberOf def.utils
@@ -53,34 +75,6 @@ def.utils.isBoolean = function(value) {
  */
 def.utils.isFunction = function(value) {
     return typeof value === 'function';
-};
-/**
- * Checks whether a value is an ID of a DIV element
- * @access public
- * @memberOf def.utils
- * @method isIdOfDiv
- * @param {*} value - Value to be checked
- * @returns {Boolean} Whether the value is an ID of a DIV element
- * @static
- * @example
- * &lthtml&gt
- *     &ltbody&gt
- *         &ltdiv id="one"&gt&lt/div&gt
- *         &ltspan id="two"&gt&lt/span&gt
- *         &ltscript&gt
- *             def.utils.isIdOfDiv(77);        // Returns false
- *             def.utils.isIdOfDiv('one');     // Returns true
- *             def.utils.isIdOfDiv('two');     // Returns false
- *             def.utils.isIdOfDiv('three');   // Returns false
- *         &lt/script&gt
- *     &lt/body&gt
- * &lt/html&gt
- */
-def.utils.isIdOfDiv = function(value) {
-    /* Gets the element by ID, if it exists */
-    var el = document.getElementById(value);
-    /* Returns whether the value is an ID of a DIV element */
-    return el !== null && el.tagName === 'DIV';
 };
 /**
  * Checks whether a value is an integer
@@ -101,25 +95,6 @@ def.utils.isInteger = function(value) {
     return def.utils.isNumber(value) && value % 1 === 0;
 };
 /**
- * Checks whether the value is in the unit interval, i.e. between 0 and 1, both included
- * @access public
- * @memberOf def.utils
- * @method isInUnitInterval
- * @param {*} value - Value to be checked
- * @returns {Boolean} Whether the value is in the unit interval
- * @static
- * @example
- * def.utils.isInUnitInterval('Hello!');       // Returns false
- * def.utils.isInUnitInterval(0);              // Returns true
- * def.utils.isInUnitInterval(-2);             // Returns false
- * def.utils.isInUnitInterval(3.7);            // Returns false
- * def.utils.isInUnitInterval(0.3);            // Returns true
- * def.utils.isInUnitInterval(1);              // Returns true
- */
-def.utils.isInUnitInterval = function(value) {
-    return def.utils.isNumber(value) && value >= 0 && value <= 1;
-};
-/**
  * Checks whether a value is a number
  * @access public
  * @memberOf def.utils
@@ -136,10 +111,10 @@ def.utils.isInUnitInterval = function(value) {
  * def.utils.isNumber('Hello!');       // Returns false
  * def.utils.isNumber([1, 2, 3]);      // Returns false
  * def.utils.isNumber({a: 1, b: 2});   // Returns false
+ * def.utils.isNumber(NaN);            // Returns false
  */
 def.utils.isNumber = function(value) {
-    return typeof value === 'number';
-    //return typeof value === 'number' && !isNaN(value);    // TODO: use this!
+    return typeof value === 'number' && !isNaN(value);
 };
 /**
  * Checks whether a value is an object, excluding arrays
